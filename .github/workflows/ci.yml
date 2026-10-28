@@ -8,12 +8,15 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python: ["3.10", "3.12"]
-        with-cv2: ["", "video"]
+        include:
+          - { python: "3.10", extras: "test" }
+          - { python: "3.12", extras: "test" }
+          - { python: "3.10", extras: "test,video" }
+          - { python: "3.12", extras: "test,video" }
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python }}
-      - run: pip install -e .[test,${{ matrix.with-cv2 }}]
+      - run: pip install -e .[${{ matrix.extras }}]
       - run: pytest -q
