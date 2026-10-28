@@ -22,9 +22,14 @@ def base_video(n=6, size=64, detail=12.0, motionless=True):
     return np.array(frames)
 
 
-def blur_video(video, k=5):
-    import cv2
-    return np.array([cv2.GaussianBlur(f, (0, 0), k) for f in video])
+def blur_video(video, sigma=5.0):
+    # use the library's own blur so the numpy-only install path is exercised too
+    from invention_gate.metrics import _blur
+    out = []
+    for f in video:
+        chans = [_blur(f[..., c], sigma) for c in range(f.shape[-1])]
+        out.append(np.stack(chans, axis=-1))
+    return np.array(out)
 
 
 def test_identity_has_unit_retention():
