@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "invention-gate"
+version = "0.1.0"
+description = "Reference-based metrics that catch restored video inventing or destroying detail"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "limitlessprojects" }]
+keywords = ["video", "restoration", "evaluation", "hallucination", "metrics"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Multimedia :: Video",
+]
+dependencies = ["numpy>=1.22"]
+
+[project.optional-dependencies]
+video = ["opencv-python-headless>=4.5"]
+test = ["pytest>=7"]
+
+[project.scripts]
+invention-gate = "invention_gate.cli:main"
+
+[tool.setuptools.packages.find]
+include = ["invention_gate*"]
